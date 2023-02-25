@@ -131,4 +131,59 @@ public class TuplesUnitTest
         v3.IsVector().Should().BeTrue();
         v3.IsPoint().Should().BeFalse();
     }
+
+    [Fact]
+    public void SubtractingVectorFromZeroVector()
+    {
+        var zero = Vector4.Zero;
+        var v = Vector.Create(1, -2, 3);
+
+        var nv = zero - v;
+        nv.X.Should().Be(-1);
+        nv.Y.Should().Be(2);
+        nv.Z.Should().Be(-3);
+        nv.W.Should().Be(0);
+        nv.IsVector().Should().BeTrue();
+        nv.IsPoint().Should().BeFalse();
+    }
+
+    [Fact]
+    public void NegatingTuple()
+    {
+        var a = new Vector4(1, -2, 3, -4);
+        var notA = -a;
+
+        notA.X.Should().Be(-1);
+        notA.Y.Should().Be(2);
+        notA.Z.Should().Be(-3);
+        notA.W.Should().Be(4);
+    }
+
+    [Fact]
+    public void MultiplyingTupleByScalar()
+    {
+        var a = new Vector4(1, -2, 3, -4);
+        var scalar = 3.5f;
+
+        var b = a * scalar;
+
+        b.X.Should().Be(3.5f);
+        b.Y.Should().Be(-7f);
+        b.Z.Should().Be(10.5f);
+        b.W.Should().Be(-14f);
+    }
+
+    [Fact]
+    public void DividingTupleByScalar()
+    {
+        var a = new Vector4(1, -2, 3, -4);
+        var scalar = 2;
+
+        var b = a / scalar;
+
+        b.X.Should().Be(0.5f);
+        b.Y.Should().Be(-1f);
+        b.Z.Should().Be(1.5f);
+        b.W.Should().Be(-2f);
+    }
 }
