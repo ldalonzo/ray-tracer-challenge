@@ -186,4 +186,35 @@ public class TuplesUnitTest
         b.Z.Should().Be(1.5f);
         b.W.Should().Be(-2f);
     }
+
+    [Theory]
+    [InlineData(1, 0, 0, 1)]
+    [InlineData(0, 1, 0, 1)]
+    [InlineData(0, 0, 1, 1)]
+    [InlineData(2, 10, 11, 15)]
+    [InlineData(-2, -10, -11, 15)]
+    [InlineData(1, 2, 3, 3.741)]
+    public void ComputingMagnitudeOfVector(float x, float y, float z, float expectedMagnitude)
+    {
+        var v = Vector.Create(x, y, z);
+
+        v.Length().Should().BeApproximately(expectedMagnitude, 1E-3F);
+    }
+
+    public static readonly TheoryData<Vector4, Vector4> NormalizingVectorTheoryData = new()
+    {
+        { Vector.Create(4, 0, 0), Vector.Create(1, 0, 0) },
+        { Vector.Create(1, 2, 3), Vector.Create(0.26726f, 0.53452f, 0.80178f) },
+    };
+
+    [Theory]
+    [MemberData(nameof(NormalizingVectorTheoryData))]
+    public void NormalizingVector(Vector4 v, Vector4 expected)
+    {
+        var actual = Vector4.Normalize(v);
+
+        actual.X.Should().BeApproximately(expected.X, 1E-5f);
+        actual.Y.Should().BeApproximately(expected.Y, 1E-5f);
+        actual.Z.Should().BeApproximately(expected.Z, 1E-5f);
+    }
 }
