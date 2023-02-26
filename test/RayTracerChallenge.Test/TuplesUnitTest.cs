@@ -217,4 +217,26 @@ public class TuplesUnitTest
         actual.Y.Should().BeApproximately(expected.Y, 1E-5f);
         actual.Z.Should().BeApproximately(expected.Z, 1E-5f);
     }
+
+    [Fact]
+    public void DotProductOfTwoTuples()
+    {
+        var a = Vector.Create(1, 2, 3);
+        var b = Vector.Create(2, 3, 4);
+
+        Vector4.Dot(a, b).Should().Be(20);
+    }
+
+    [Fact]
+    public void CrossProductOfTwoVectors()
+    {
+        var a = Vector.Create(1, 2, 3);
+        var b = Vector.Create(2, 3, 4);
+
+        Vector3 a3 = new(a.X, a.Y, a.Z);
+        Vector3 b3 = new(b.X, b.Y, b.Z);
+
+        Vector3.Cross(a3, b3).Should().Be(new Vector3(-1, 2, -1));
+        Vector3.Cross(b3, a3).Should().Be(new Vector3(1, -2, 1));
+    }
 }
