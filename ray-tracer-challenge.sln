@@ -10,6 +10,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Test", "test\RayTracerChallenge.Test\RayTracerChallenge.Test.csproj", "{C41E65F8-2D28-4F48-8F48-5A41E92573C2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Core", "src\RayTracerChallenge.Core\RayTracerChallenge.Core.csproj", "{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.ProjectileMotion", "src\RayTracerChallenge.Examples.ProjectileMotion\RayTracerChallenge.Examples.ProjectileMotion.csproj", "{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C5431AA6-B01E-465B-B474-246FF275DADE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.ProjectileMotion.WindowsForms", "src\RayTracerChallenge.Examples.ProjectileMotion.WindowsForms\RayTracerChallenge.Examples.ProjectileMotion.WindowsForms.csproj", "{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,9 +28,24 @@ Global
 		{C41E65F8-2D28-4F48-8F48-5A41E92573C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C41E65F8-2D28-4F48-8F48-5A41E92573C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C41E65F8-2D28-4F48-8F48-5A41E92573C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C41E65F8-2D28-4F48-8F48-5A41E92573C2} = {C5431AA6-B01E-465B-B474-246FF275DADE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19B99BF4-5260-4BDD-86DC-FF8A6410561B}

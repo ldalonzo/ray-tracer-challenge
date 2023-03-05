@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\RayTracerChallenge.Core\RayTracerChallenge.Core.csproj" />
+    <ProjectReference Include="..\..\src\RayTracerChallenge.Examples.ProjectileMotion\RayTracerChallenge.Examples.ProjectileMotion.csproj" />
   </ItemGroup>
 
 </Project>

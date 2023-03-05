@@ -1,8 +1,6 @@
-﻿using System.Numerics;
+﻿namespace RayTracerChallenge.Examples.ProjectileMotion;
 
-namespace RayTracerChallenge.Test;
-
-public record Environment(Vector3 Gravity, Vector3 Wind)
+public record ProjectileEnvironment(Vector3 Gravity, Vector3 Wind)
 {
     public Projectile Tick(Projectile projectile) => new(
             projectile.Position + projectile.Velocity,
@@ -18,4 +16,3 @@ public record Environment(Vector3 Gravity, Vector3 Wind)
         }
     }
 }
-

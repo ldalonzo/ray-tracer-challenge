@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
+using RayTracerChallenge.Examples.ProjectileMotion;
 
-namespace RayTracerChallenge.Test;
+namespace RayTracerChallenge.Test.Examples;
 
 public class VirtualCannonUnitTest
 {
@@ -15,7 +16,7 @@ public class VirtualCannonUnitTest
             // velocity is normalized to 1 unit / tick.
             Vector3.Normalize(new Vector3(1, 1, 0)));
 
-        var e = new Environment(
+        var e = new ProjectileEnvironment(
             // gravity -0.1 unit/tick
             new Vector3(0, -0.1f, 0),
 
@@ -29,4 +30,3 @@ public class VirtualCannonUnitTest
         traj.Last().Position.X.Should().BeApproximately(11.114f, 1E-3f);
     }
 }
-
