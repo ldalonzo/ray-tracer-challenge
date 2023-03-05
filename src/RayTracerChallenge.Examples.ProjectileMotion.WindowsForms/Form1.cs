@@ -1,4 +1,5 @@
-using System.Numerics;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Graphics.Skia;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 
@@ -12,36 +13,30 @@ public partial class Form1 : Form
     }
 
     private void skControl1_PaintSurface(object sender, SKPaintSurfaceEventArgs e)
-         => DrawTrajectory(e.Surface.Canvas, e.Info);
-
-    private void DrawTrajectory(SKCanvas canvas, SKImageInfo info)
     {
-        var padding = 6;
+        e.Surface.Canvas.Clear(SKColor.Parse("#003366"));
 
-        var p0 = new Projectile(
-           new Vector3(1, 1, 0),
-           Vector3.Normalize(new Vector3(1, 1, 0)));
+        var canvas = new SkiaCanvas() { Canvas = e.Surface.Canvas };
+        var info = e.Info;
 
-        var env = new ProjectileEnvironment(
-            // gravity -0.1 unit/tick
-            new Vector3(0, -0.1f, 0),
+        Draw(canvas, e.Info);
+    }
 
-            // wind is -0.01 unit/tick
-            new Vector3(-0.01f, 0, 0));
+    private void skglControl1_PaintSurface(object sender, SKPaintGLSurfaceEventArgs e)
+    {
+        e.Surface.Canvas.Clear(SKColor.Parse("#000000"));
 
-        var trajectory = env.Trajectory(p0).ToList();
+        var canvas = new SkiaCanvas() { Canvas = e.Surface.Canvas };
+        var info = e.Info;
 
-        var scaleX = (info.Width - padding * 2) / trajectory.Max(z => z.Position.X);
-        var scaleY = (info.Height - padding * 2) / trajectory.Max(z => z.Position.Y);
+        Draw(canvas, e.Info);
+    }
 
-        var paint = new SKPaint() { Color = new SKColor(255, 0, 0), IsAntialias = false };
-        foreach (var p in trajectory)
-        {
-            canvas.DrawCircle(
-                padding + p.Position.X * scaleX,
-                info.Height - padding - p.Position.Y * scaleY,
-                2.5f,
-                paint);
-        }
+    private void Draw(ICanvas canvas, SKImageInfo info)
+    {
+        using var renderer = new ProjectileEnvironmentImageRenderer(info.Width, info.Height);
+        using var image = renderer.Render();
+
+        canvas.DrawImage(image, 0, 0, info.Width, info.Height);
     }
 }

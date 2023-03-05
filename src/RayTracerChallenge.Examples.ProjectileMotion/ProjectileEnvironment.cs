@@ -16,3 +16,4 @@ public record ProjectileEnvironment(Vector3 Gravity, Vector3 Wind)
         }
     }
 }
+
