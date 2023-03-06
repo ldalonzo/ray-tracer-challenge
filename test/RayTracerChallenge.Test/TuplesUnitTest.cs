@@ -239,4 +239,66 @@ public class TuplesUnitTest
         Vector3.Cross(a3, b3).Should().Be(new Vector3(-1, 2, -1));
         Vector3.Cross(b3, a3).Should().Be(new Vector3(1, -2, 1));
     }
+
+    [Fact]
+    public void ColorsAreVector3()
+    {
+        var c = Color.Create(-0.5f, 0.4f, 1.7f);
+
+        c.X.Should().Be(-0.5f);
+        c.Y.Should().Be(0.4f);
+        c.Z.Should().Be(1.7f);
+    }
+
+    [Fact]
+    public void AddingColors()
+    {
+        var c1 = Color.Create(0.9f, 0.6f, 0.75f);
+        var c2 = Color.Create(0.7f, 0.1f, 0.25f);
+
+        var c3 = c1 + c2;
+
+        c3.X.Should().BeApproximately(1.6f, 1E-6F);
+        c3.Y.Should().BeApproximately(0.7f, 1E-6F);
+        c3.Z.Should().BeApproximately(1.0f, 1E-6F);
+    }
+
+    [Fact]
+    public void SubtractingColors()
+    {
+        var c1 = Color.Create(0.9f, 0.6f, 0.75f);
+        var c2 = Color.Create(0.7f, 0.1f, 0.25f);
+
+        var c3 = c1 - c2;
+
+        c3.X.Should().BeApproximately(0.2f, 1E-6F);
+        c3.Y.Should().BeApproximately(0.5f, 1E-6F);
+        c3.Z.Should().BeApproximately(0.5f, 1E-6F);
+    }
+
+    [Fact]
+    public void MultiplyingColorByScalar()
+    {
+        var c = Color.Create(0.2f, 0.3f, 0.4f);
+        var s = 2;
+
+        var m = c * s;
+
+        m.X.Should().BeApproximately(0.4f, 1E-6F);
+        m.Y.Should().BeApproximately(0.6f, 1E-6F);
+        m.Z.Should().BeApproximately(0.8f, 1E-6F);
+    }
+
+    [Fact]
+    public void MultiplyingColors()
+    {
+        var c1 = Color.Create(1f, 0.2f, 0.4f);
+        var c2 = Color.Create(0.9f, 1f, 0.1f);
+
+        var c3 = c1 * c2;
+
+        c3.X.Should().BeApproximately(0.9f, 1E-6F);
+        c3.Y.Should().BeApproximately(0.2f, 1E-6F);
+        c3.Z.Should().BeApproximately(0.04f, 1E-6F);
+    }
 }
