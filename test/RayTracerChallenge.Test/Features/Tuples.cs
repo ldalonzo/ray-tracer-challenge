@@ -1,14 +1,10 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using Vector = RayTracerChallenge.Core.Vector;
 
 namespace RayTracerChallenge.Test.Features;
 
 public class Tuples
 {
-    /// <summary>
-    /// A tuple with w=1.0 is a point
-    /// </summary>
     [Theory]
     [AutoData]
     public void A_tuple_with_w_eq_1_is_a_point(float x, float y, float z)
@@ -23,19 +19,16 @@ public class Tuples
         a.IsVector().Should().BeFalse();
     }
 
-    /// <summary>
-    /// A tuple with w=0 is a vector
-    /// </summary>
     [Theory]
-    [InlineAutoData(0.0)]
-    public void TupleIsAVector(float w, float x, float y, float z)
+    [AutoData]
+    public void TupleIsAVector(float x, float y, float z)
     {
-        var a = new Vector4(x, y, z, w);
+        var a = new Vector4(x, y, z, 0f);
 
         a.X.Should().Be(x);
         a.Y.Should().Be(y);
         a.Z.Should().Be(z);
-        a.W.Should().Be(w);
+        a.W.Should().Be(0f);
         a.IsPoint().Should().BeFalse();
         a.IsVector().Should().BeTrue();
     }
@@ -253,7 +246,7 @@ public class Tuples
     }
 
     [Fact]
-    public void AddingColors()
+    public void Adding_colors()
     {
         var c1 = Color.Create(0.9f, 0.6f, 0.75f);
         var c2 = Color.Create(0.7f, 0.1f, 0.25f);
@@ -266,7 +259,7 @@ public class Tuples
     }
 
     [Fact]
-    public void SubtractingColors()
+    public void Subtracting_colors()
     {
         var c1 = Color.Create(0.9f, 0.6f, 0.75f);
         var c2 = Color.Create(0.7f, 0.1f, 0.25f);
@@ -279,7 +272,7 @@ public class Tuples
     }
 
     [Fact]
-    public void MultiplyingColorByScalar()
+    public void Multiplying_a_color_by_a_scalar()
     {
         var c = Color.Create(0.2f, 0.3f, 0.4f);
         var s = 2;
@@ -292,7 +285,7 @@ public class Tuples
     }
 
     [Fact]
-    public void MultiplyingColors()
+    public void Multiplying_colors()
     {
         var c1 = Color.Create(1f, 0.2f, 0.4f);
         var c2 = Color.Create(0.9f, 1f, 0.1f);

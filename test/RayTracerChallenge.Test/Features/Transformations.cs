@@ -5,6 +5,8 @@ namespace RayTracerChallenge.Test.Features;
 
 public class Transformations
 {
+    private const float Tolerance = 1E-6F;
+
     [Fact]
     public void Multiplying_by_a_translation_matrix()
     {
@@ -102,5 +104,84 @@ public class Transformations
         pt.Y.Should().Be(3);
         pt.Z.Should().Be(4);
         pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void Rotating_a_point_around_the_x_axis()
+    {
+        var halfQuarter = Matrix4x4.CreateRotationX(MathF.PI / 4);
+        var fullQuarter = Matrix4x4.CreateRotationX(MathF.PI / 2);
+        var p = Point.Create(0, 1, 0);
+
+        var p1 = Vector4.Transform(p, halfQuarter);
+        var p2 = Vector4.Transform(p, fullQuarter);
+
+        p1.X.Should().BeApproximately(0, Tolerance);
+        p1.Y.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        p1.Z.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        p1.IsPoint().Should().BeTrue();
+
+        p2.X.Should().BeApproximately(0, Tolerance);
+        p2.Y.Should().BeApproximately(0, Tolerance);
+        p2.Z.Should().BeApproximately(1, Tolerance);
+        p2.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void The_inverse_of_an_x_rotation_rotates_in_the_opposite_direction()
+    {
+        var halfQuarter = Matrix4x4.CreateRotationX(MathF.PI / 4);
+        Matrix4x4.Invert(halfQuarter, out var inv).Should().BeTrue();
+        var p = Point.Create(0, 1, 0);
+
+        var p1 = Vector4.Transform(p, inv);
+
+        p1.X.Should().BeApproximately(0, Tolerance);
+        p1.Y.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        p1.Z.Should().BeApproximately(-MathF.Sqrt(2) / 2, Tolerance);
+        p1.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void Rotating_a_point_around_the_y_axis()
+    {
+        var halfQuarter = Matrix4x4.CreateRotationY(MathF.PI / 4);
+        var fullQuarter = Matrix4x4.CreateRotationY(MathF.PI / 2);
+        var p = Point.Create(0, 0, 1);
+
+        var p1 = Vector4.Transform(p, halfQuarter);
+        var p2 = Vector4.Transform(p, fullQuarter);
+
+        
+        p1.X.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        p1.Y.Should().BeApproximately(0, Tolerance);
+        p1.Z.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        p1.IsPoint().Should().BeTrue();
+
+        p2.X.Should().BeApproximately(1, Tolerance);
+        p2.Y.Should().BeApproximately(0, Tolerance);
+        p2.Z.Should().BeApproximately(0, Tolerance);
+        p2.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void Rotating_a_point_around_the_Z_axis()
+    {
+        var halfQuarter = Matrix4x4.CreateRotationZ(MathF.PI / 4);
+        var fullQuarter = Matrix4x4.CreateRotationZ(MathF.PI / 2);
+        var p = Point.Create(0, 1, 0);
+
+        var p1 = Vector4.Transform(p, halfQuarter);
+        var p2 = Vector4.Transform(p, fullQuarter);
+
+        p1.X.Should().BeApproximately(-MathF.Sqrt(2) / 2, Tolerance);
+        p1.Y.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        p1.Z.Should().BeApproximately(0, Tolerance);
+        p1.IsPoint().Should().BeTrue();
+
+        p2.X.Should().BeApproximately(-1, Tolerance);
+        p2.Y.Should().BeApproximately(0, Tolerance);
+        p2.Z.Should().BeApproximately(0, Tolerance);
+        p2.IsPoint().Should().BeTrue();
     }
 }

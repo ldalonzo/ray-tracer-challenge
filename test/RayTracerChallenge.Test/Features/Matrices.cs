@@ -4,6 +4,8 @@ namespace RayTracerChallenge.Test.Features;
 
 public class Matrices
 {
+    private const float Tolerance = 1E-5F;
+
     [Fact]
     public void Constructing_and_inspecting_a_4x4_matrix()
     {
@@ -176,7 +178,7 @@ public class Matrices
 
         var determinant = a.GetDeterminant();
 
-        determinant.Should().BeApproximately(0, 1E-6f);
+        determinant.Should().BeApproximately(0, Tolerance);
     }
 
     [Fact]
@@ -190,17 +192,17 @@ public class Matrices
 
         Matrix4x4.Invert(a, out var b).Should().BeTrue();
 
-        b.M11.Should().BeApproximately(0.21805f, 1E-5f);
-        b.M12.Should().BeApproximately(0.45113f, 1E-5f);
+        b.M11.Should().BeApproximately(0.21805f, Tolerance);
+        b.M12.Should().BeApproximately(0.45113f, Tolerance);
 
-        b.M21.Should().BeApproximately(-0.80827f, 1E-5f);
-        b.M22.Should().BeApproximately(-1.45677f, 1E-5f);
+        b.M21.Should().BeApproximately(-0.80827f, Tolerance);
+        b.M22.Should().BeApproximately(-1.45677f, Tolerance);
 
-        b.M33.Should().BeApproximately(-0.05263f, 1E-5f);
-        b.M34.Should().BeApproximately(0.19737f, 1E-5f);
+        b.M33.Should().BeApproximately(-0.05263f, Tolerance);
+        b.M34.Should().BeApproximately(0.19737f, Tolerance);
 
-        b.M43.Should().BeApproximately(-0.30075f, 1E-5f);
-        b.M44.Should().BeApproximately(0.30639f, 1E-5f);
+        b.M43.Should().BeApproximately(-0.30075f, Tolerance);
+        b.M44.Should().BeApproximately(0.30639f, Tolerance);
     }
 
     [Fact]
@@ -222,24 +224,24 @@ public class Matrices
         Matrix4x4.Invert(b, out var b_i).Should().BeTrue();
         var d = c * b_i;
 
-        d.M11.Should().BeApproximately(a.M11, 1e-5f);
-        d.M12.Should().BeApproximately(a.M12, 1e-5f);
-        d.M13.Should().BeApproximately(a.M13, 1e-5f);
-        d.M14.Should().BeApproximately(a.M14, 1e-5f);
+        d.M11.Should().BeApproximately(a.M11, Tolerance);
+        d.M12.Should().BeApproximately(a.M12, Tolerance);
+        d.M13.Should().BeApproximately(a.M13, Tolerance);
+        d.M14.Should().BeApproximately(a.M14, Tolerance);
 
-        d.M21.Should().BeApproximately(a.M21, 1e-5f);
-        d.M22.Should().BeApproximately(a.M22, 1e-5f);
-        d.M23.Should().BeApproximately(a.M23, 1e-5f);
-        d.M24.Should().BeApproximately(a.M24, 1e-5f);
+        d.M21.Should().BeApproximately(a.M21, Tolerance);
+        d.M22.Should().BeApproximately(a.M22, Tolerance);
+        d.M23.Should().BeApproximately(a.M23, Tolerance);
+        d.M24.Should().BeApproximately(a.M24, Tolerance);
 
-        d.M31.Should().BeApproximately(a.M31, 1e-5f);
-        d.M32.Should().BeApproximately(a.M32, 1e-5f);
-        d.M33.Should().BeApproximately(a.M33, 1e-5f);
-        d.M34.Should().BeApproximately(a.M34, 1e-5f);
+        d.M31.Should().BeApproximately(a.M31, Tolerance);
+        d.M32.Should().BeApproximately(a.M32, Tolerance);
+        d.M33.Should().BeApproximately(a.M33, Tolerance);
+        d.M34.Should().BeApproximately(a.M34, Tolerance);
 
-        d.M41.Should().BeApproximately(a.M41, 1e-5f);
-        d.M42.Should().BeApproximately(a.M42, 1e-5f);
-        d.M43.Should().BeApproximately(a.M43, 1e-5f);
-        d.M44.Should().BeApproximately(a.M44, 1e-5f);
+        d.M41.Should().BeApproximately(a.M41, Tolerance);
+        d.M42.Should().BeApproximately(a.M42, Tolerance);
+        d.M43.Should().BeApproximately(a.M43, Tolerance);
+        d.M44.Should().BeApproximately(a.M44, Tolerance);
     }
 }

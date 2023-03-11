@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace RayTracerChallenge.Test;
+﻿namespace RayTracerChallenge.Core;
 
 public static class Point
 {
