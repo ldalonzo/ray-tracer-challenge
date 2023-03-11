@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
 
-namespace RayTracerChallenge.Test;
+namespace RayTracerChallenge.Test.Features;
 
-public class MatricesUnitTest
+public class Matrices
 {
     [Fact]
     public void Constructing_and_inspecting_a_4x4_matrix()
