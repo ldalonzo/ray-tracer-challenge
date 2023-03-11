@@ -1,13 +1,11 @@
 ﻿using System.Numerics;
-using FluentAssertions;
-using SkiaSharp;
 
 namespace RayTracerChallenge.Test;
 
 public class MatricesUnitTest
 {
     [Fact]
-    public void ConstructingAndInspectingA4x4Matrix()
+    public void Constructing_and_inspecting_a_4x4_matrix()
     {
         var m = new Matrix4x4(
               1, 2, 3, 4,
@@ -25,7 +23,7 @@ public class MatricesUnitTest
     }
 
     [Fact]
-    public void MatrixEqualityWithIdenticalMatrices()
+    public void Matrix_equality_with_identical_matrices()
     {
         var a = new Matrix4x4(
             1, 2, 3, 4,
@@ -44,7 +42,7 @@ public class MatricesUnitTest
     }
 
     [Fact]
-    public void MatrixEqualityWithDifferentMatrices()
+    public void Matrix_equality_with_different_matrices()
     {
         var a = new Matrix4x4(
             1, 2, 3, 4,
@@ -63,7 +61,7 @@ public class MatricesUnitTest
     }
 
     [Fact]
-    public void MultiplyingTwoMatrices()
+    public void Multiplying_two_matrices()
     {
         var a = new Matrix4x4(
             1, 2, 3, 4,
@@ -98,7 +96,7 @@ public class MatricesUnitTest
     }
 
     [Fact]
-    public void MatrixMultipliedByTuple()
+    public void A_matrix_multiplied_by_a_tuple()
     {
         var a = new Matrix4x4(
            1, 2, 3, 4,
@@ -114,5 +112,134 @@ public class MatricesUnitTest
         c.Y.Should().Be(24);
         c.Z.Should().Be(33);
         c.W.Should().Be(1);
+    }
+
+    [Fact]
+    public void Multiplying_a_matrix_by_the_identity_matrix()
+    {
+        var a = new Matrix4x4(
+            0, 1, 2, 4,
+            1, 2, 4, 8,
+            2, 4, 8, 16,
+            4, 8, 16, 32);
+
+        var b = a * Matrix4x4.Identity;
+
+        b.Should().NotBeSameAs(a);
+        b.Should().Be(a);
+    }
+
+    [Fact]
+    public void Multiplying_the_identity_matrix_by_a_tuple()
+    {
+        var a = new Vector4(1, 2, 3, 4);
+
+        var b = Vector4.Transform(a, Matrix4x4.Identity);
+
+        b.Should().NotBeSameAs(a);
+        b.Should().Be(a);
+    }
+
+    [Fact]
+    public void Transposing_the_identity_matrix()
+    {
+        var a = Matrix4x4.Identity;
+
+        var b = Matrix4x4.Transpose(a);
+
+        b.Should().NotBeSameAs(a);
+        b.Should().Be(a);
+    }
+
+    [Fact]
+    public void Testing_an_invertible_matrix_for_invertibility()
+    {
+        var a = new Matrix4x4(
+            6, 4, 4, 4,
+            5, 5, 7, 6,
+            4, -9, 3, -7,
+            9, 1, 7, -6);
+
+        var determinant = a.GetDeterminant();
+
+        determinant.Should().BeApproximately(-2_120, 1E-6f);
+    }
+
+    [Fact]
+    public void Testing_a_noninvertible_matrix_for_invertibility()
+    {
+        var a = new Matrix4x4(
+            -4, 2, -2, -3,
+            9, 6, 2, 6,
+            0, -5, 1, -5,
+            0, 0, 0, 0);
+
+        var determinant = a.GetDeterminant();
+
+        determinant.Should().BeApproximately(0, 1E-6f);
+    }
+
+    [Fact]
+    public void Calculating_the_inverse_of_a_matrix()
+    {
+        var a = new Matrix4x4(
+            -5, 2, 6, -8,
+            1, -5, 1, 8,
+            7, 7, -6, -7,
+            1, -3, 7, 4);
+
+        Matrix4x4.Invert(a, out var b).Should().BeTrue();
+
+        b.M11.Should().BeApproximately(0.21805f, 1E-5f);
+        b.M12.Should().BeApproximately(0.45113f, 1E-5f);
+
+        b.M21.Should().BeApproximately(-0.80827f, 1E-5f);
+        b.M22.Should().BeApproximately(-1.45677f, 1E-5f);
+
+        b.M33.Should().BeApproximately(-0.05263f, 1E-5f);
+        b.M34.Should().BeApproximately(0.19737f, 1E-5f);
+
+        b.M43.Should().BeApproximately(-0.30075f, 1E-5f);
+        b.M44.Should().BeApproximately(0.30639f, 1E-5f);
+    }
+
+    [Fact]
+    public void Multiplying_a_product_by_its_inverse()
+    {
+        var a = new Matrix4x4(
+            3, -9, 7, 3,
+            3, -8, 2, -9,
+            -4, 4, 4, 1,
+            -6, 5, -1, 1);
+
+        var b = new Matrix4x4(
+            8, 2, 2, 2,
+            3, -1, 7, 0,
+            7, 0, 5, 4,
+            6, -2, 0, 5);
+
+        var c = a * b;
+        Matrix4x4.Invert(b, out var b_i).Should().BeTrue();
+        var d = c * b_i;
+
+        d.M11.Should().BeApproximately(a.M11, 1e-5f);
+        d.M12.Should().BeApproximately(a.M12, 1e-5f);
+        d.M13.Should().BeApproximately(a.M13, 1e-5f);
+        d.M14.Should().BeApproximately(a.M14, 1e-5f);
+
+        d.M21.Should().BeApproximately(a.M21, 1e-5f);
+        d.M22.Should().BeApproximately(a.M22, 1e-5f);
+        d.M23.Should().BeApproximately(a.M23, 1e-5f);
+        d.M24.Should().BeApproximately(a.M24, 1e-5f);
+
+        d.M31.Should().BeApproximately(a.M31, 1e-5f);
+        d.M32.Should().BeApproximately(a.M32, 1e-5f);
+        d.M33.Should().BeApproximately(a.M33, 1e-5f);
+        d.M34.Should().BeApproximately(a.M34, 1e-5f);
+
+        d.M41.Should().BeApproximately(a.M41, 1e-5f);
+        d.M42.Should().BeApproximately(a.M42, 1e-5f);
+        d.M43.Should().BeApproximately(a.M43, 1e-5f);
+        d.M44.Should().BeApproximately(a.M44, 1e-5f);
     }
 }
