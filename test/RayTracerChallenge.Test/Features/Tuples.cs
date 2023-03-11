@@ -1,22 +1,24 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
+using Vector = RayTracerChallenge.Core.Vector;
 
-namespace RayTracerChallenge.Test;
+namespace RayTracerChallenge.Test.Features;
 
-public class TuplesUnitTest
+public class Tuples
 {
     /// <summary>
     /// A tuple with w=1.0 is a point
     /// </summary>
     [Theory]
-    [InlineAutoData(1.0)]
-    public void TupleIsAPoint(float w, float x, float y, float z)
+    [AutoData]
+    public void A_tuple_with_w_eq_1_is_a_point(float x, float y, float z)
     {
-        var a = new Vector4(x, y, z, w);
+        var a = new Vector4(x, y, z, 1.0f);
 
         a.X.Should().Be(x);
         a.Y.Should().Be(y);
         a.Z.Should().Be(z);
-        a.W.Should().Be(w);
+        a.W.Should().Be(1.0f);
         a.IsPoint().Should().BeTrue();
         a.IsVector().Should().BeFalse();
     }
