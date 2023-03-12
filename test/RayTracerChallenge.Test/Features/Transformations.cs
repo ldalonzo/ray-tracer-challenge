@@ -184,4 +184,88 @@ public class Transformations
         p2.Z.Should().BeApproximately(0, Tolerance);
         p2.IsPoint().Should().BeTrue();
     }
+
+    [Fact]
+    public void A_shearing_transformation_moves_x_in_proportion_to_y()
+    {
+        var transform = Core.Transformations.CreateShearing(1, 0, 0, 0, 0, 0);
+        var p = Point.Create(2, 3, 4);
+
+        var pt = Vector4.Transform(p, transform);
+
+        pt.X.Should().Be(5);
+        pt.Y.Should().Be(3);
+        pt.Z.Should().Be(4);
+        pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void A_shearing_transformation_moves_x_in_proportion_to_z()
+    {
+        var transform = Core.Transformations.CreateShearing(0, 1, 0, 0, 0, 0);
+        var p = Point.Create(2, 3, 4);
+
+        var pt = Vector4.Transform(p, transform);
+
+        pt.X.Should().Be(6);
+        pt.Y.Should().Be(3);
+        pt.Z.Should().Be(4);
+        pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void A_shearing_transformation_moves_y_in_proportion_to_x()
+    {
+        var transform = Core.Transformations.CreateShearing(0, 0, 1, 0, 0, 0);
+        var p = Point.Create(2, 3, 4);
+
+        var pt = Vector4.Transform(p, transform);
+
+        pt.X.Should().Be(2);
+        pt.Y.Should().Be(5);
+        pt.Z.Should().Be(4);
+        pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void A_shearing_transformation_moves_y_in_proportion_to_z()
+    {
+        var transform = Core.Transformations.CreateShearing(0, 0, 0, 1, 0, 0);
+        var p = Point.Create(2, 3, 4);
+
+        var pt = Vector4.Transform(p, transform);
+
+        pt.X.Should().Be(2);
+        pt.Y.Should().Be(7);
+        pt.Z.Should().Be(4);
+        pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void A_shearing_transformation_moves_z_in_proportion_to_x()
+    {
+        var transform = Core.Transformations.CreateShearing(0, 0, 0, 0, 1, 0);
+        var p = Point.Create(2, 3, 4);
+
+        var pt = Vector4.Transform(p, transform);
+
+        pt.X.Should().Be(2);
+        pt.Y.Should().Be(3);
+        pt.Z.Should().Be(6);
+        pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void A_shearing_transformation_moves_z_in_proportion_to_y()
+    {
+        var transform = Core.Transformations.CreateShearing(0, 0, 0, 0, 0, 1);
+        var p = Point.Create(2, 3, 4);
+
+        var pt = Vector4.Transform(p, transform);
+
+        pt.X.Should().Be(2);
+        pt.Y.Should().Be(3);
+        pt.Z.Should().Be(7);
+        pt.IsPoint().Should().BeTrue();
+    }
 }
