@@ -11,8 +11,8 @@ public class Spheres
         var xs = s.Intersect(ray).ToList();
 
         xs.Should().HaveCount(2);
-        xs[0].Should().Be(4);
-        xs[1].Should().Be(6);
+        xs[0].T.Should().Be(4);
+        xs[1].T.Should().Be(6);
     }
 
     [Fact]
@@ -24,8 +24,8 @@ public class Spheres
         var xs = s.Intersect(ray).ToList();
 
         xs.Should().HaveCount(2);
-        xs[0].Should().Be(5);
-        xs[1].Should().Be(5);
+        xs[0].T.Should().Be(5);
+        xs[1].T.Should().Be(5);
     }
 
     [Fact]
@@ -48,8 +48,8 @@ public class Spheres
         var xs = s.Intersect(ray).ToList();
 
         xs.Should().HaveCount(2);
-        xs[0].Should().Be(-1.0F);
-        xs[1].Should().Be(1.0F);
+        xs[0].T.Should().Be(-1.0F);
+        xs[1].T.Should().Be(1.0F);
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class Spheres
         var xs = s.Intersect(ray).ToList();
 
         xs.Should().HaveCount(2);
-        xs[0].Should().Be(-6.0F);
-        xs[1].Should().Be(-4.0F);
+        xs[0].T.Should().Be(-6.0F);
+        xs[1].T.Should().Be(-4.0F);
     }
 }

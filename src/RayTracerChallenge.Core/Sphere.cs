@@ -1,10 +1,10 @@
 ﻿namespace RayTracerChallenge.Core;
 
-public record struct Sphere()
+public record struct Sphere() : ISceneObject
 {
     public Vector4 Center { get; } = Primitives.Point(0, 0, 0);
 
-    public IEnumerable<float> Intersect(Ray ray)
+    public IEnumerable<Intersection> Intersect(Ray ray)
     {
         var sphereToRay = ray.Origin - Center;
 
@@ -17,8 +17,8 @@ public record struct Sphere()
         {
             var ds = MathF.Sqrt(discriminant);
 
-            yield return (-b - ds) / 2 * a;
-            yield return (-b + ds) / 2 * a;
+            yield return new Intersection(this, (-b - ds) / 2 * a);
+            yield return new Intersection(this, (-b + ds) / 2 * a);
         }
     }
 }
