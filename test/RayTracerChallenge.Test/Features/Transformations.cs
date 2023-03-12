@@ -188,7 +188,7 @@ public class Transformations
     [Fact]
     public void A_shearing_transformation_moves_x_in_proportion_to_y()
     {
-        var transform = Core.Transformations.CreateShearing(1, 0, 0, 0, 0, 0);
+        var transform = new Transformation4x4Builder().WithShearing(1, 0, 0, 0, 0, 0).Build();
         var p = Point.Create(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
@@ -202,7 +202,7 @@ public class Transformations
     [Fact]
     public void A_shearing_transformation_moves_x_in_proportion_to_z()
     {
-        var transform = Core.Transformations.CreateShearing(0, 1, 0, 0, 0, 0);
+        var transform = new Transformation4x4Builder().WithShearing(0, 1, 0, 0, 0, 0).Build();
         var p = Point.Create(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
@@ -216,7 +216,7 @@ public class Transformations
     [Fact]
     public void A_shearing_transformation_moves_y_in_proportion_to_x()
     {
-        var transform = Core.Transformations.CreateShearing(0, 0, 1, 0, 0, 0);
+        var transform = new Transformation4x4Builder().WithShearing(0, 0, 1, 0, 0, 0).Build();
         var p = Point.Create(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
@@ -230,7 +230,7 @@ public class Transformations
     [Fact]
     public void A_shearing_transformation_moves_y_in_proportion_to_z()
     {
-        var transform = Core.Transformations.CreateShearing(0, 0, 0, 1, 0, 0);
+        var transform = new Transformation4x4Builder().WithShearing(0, 0, 0, 1, 0, 0).Build();
         var p = Point.Create(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
@@ -244,7 +244,7 @@ public class Transformations
     [Fact]
     public void A_shearing_transformation_moves_z_in_proportion_to_x()
     {
-        var transform = Core.Transformations.CreateShearing(0, 0, 0, 0, 1, 0);
+        var transform = new Transformation4x4Builder().WithShearing(0, 0, 0, 0, 1, 0).Build();
         var p = Point.Create(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
@@ -258,7 +258,7 @@ public class Transformations
     [Fact]
     public void A_shearing_transformation_moves_z_in_proportion_to_y()
     {
-        var transform = Core.Transformations.CreateShearing(0, 0, 0, 0, 0, 1);
+        var transform = new Transformation4x4Builder().WithShearing(0, 0, 0, 0, 0, 1).Build();
         var p = Point.Create(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
@@ -267,5 +267,65 @@ public class Transformations
         pt.Y.Should().Be(3);
         pt.Z.Should().Be(7);
         pt.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void Individual_transformations_are_applied_in_sequence()
+    {
+        var p = Point.Create(1, 0, 1);
+        var a = Matrix4x4.CreateRotationX(MathF.PI / 2);
+        var b = Matrix4x4.CreateScale(5, 5, 5);
+        var c = Matrix4x4.CreateTranslation(10, 5, 7);
+
+        // apply rotation first
+        var p2 = Vector4.Transform(p, a);
+        p2.X.Should().BeApproximately(1, Tolerance);
+        p2.Y.Should().BeApproximately(-1, Tolerance);
+        p2.Z.Should().BeApproximately(0, Tolerance);
+
+        // then apply scaling
+        var p3 = Vector4.Transform(p2, b);
+        p3.X.Should().BeApproximately(5, Tolerance);
+        p3.Y.Should().BeApproximately(-5, Tolerance);
+        p3.Z.Should().BeApproximately(0, Tolerance);
+
+        // then apply translation
+        var p4 = Vector4.Transform(p3, c);
+        p4.X.Should().BeApproximately(15, Tolerance);
+        p4.Y.Should().BeApproximately(0, Tolerance);
+        p4.Z.Should().BeApproximately(7, Tolerance);
+    }
+
+    [Fact]
+    public void Chained_transformations_must_be_applied_in_reverse_order()
+    {
+        var p = Point.Create(1, 0, 1);
+        var a = Matrix4x4.CreateRotationX(MathF.PI / 2);
+        var b = Matrix4x4.CreateScale(5, 5, 5);
+        var c = Matrix4x4.CreateTranslation(10, 5, 7);
+
+        var t = Matrix4x4.Multiply(Matrix4x4.Multiply(a, b), c);
+
+        var pt= Vector4.Transform(p, t);
+        pt.X.Should().BeApproximately(15, Tolerance);
+        pt.Y.Should().BeApproximately(0, Tolerance);
+        pt.Z.Should().BeApproximately(7, Tolerance);
+    }
+
+    [Fact]
+    public void Chained_transformations()
+    {
+        var p = Point.Create(1, 0, 1);
+
+        var t = new Transformation4x4Builder()
+            .Append(Matrix4x4.CreateRotationX(MathF.PI / 2))
+            .Append(Matrix4x4.CreateScale(5, 5, 5))
+            .Append(Matrix4x4.CreateTranslation(10, 5, 7))
+            .Build();
+
+        var pt = Vector4.Transform(p, t);
+        pt.X.Should().BeApproximately(15, Tolerance);
+        pt.Y.Should().BeApproximately(0, Tolerance);
+        pt.Z.Should().BeApproximately(7, Tolerance);
     }
 }
