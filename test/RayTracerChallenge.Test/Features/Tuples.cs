@@ -79,7 +79,7 @@ public class Tuples
     }
 
     [Fact]
-    public void SubtractingTwoPoints()
+    public void Subtracting_two_points()
     {
         var p1 = Primitives.Point(3, 2, 1);
         var p2 = Primitives.Point(5, 6, 7);
@@ -213,7 +213,7 @@ public class Tuples
     }
 
     [Fact]
-    public void DotProductOfTwoTuples()
+    public void The_dot_product_of_two_tuples()
     {
         var a = Primitives.Vector(1, 2, 3);
         var b = Primitives.Vector(2, 3, 4);

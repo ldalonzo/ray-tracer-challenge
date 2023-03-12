@@ -23,6 +23,7 @@ public class Rays
         var ray = new Ray(Primitives.Point(2, 3, 4), Primitives.Vector(1, 0, 0));
 
         var p = ray.Position(t);
+
         p.X.Should().Be(expX);
         p.Y.Should().Be(expY);
         p.Z.Should().Be(expZ);

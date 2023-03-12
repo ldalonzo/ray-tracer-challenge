@@ -2,8 +2,5 @@
 
 public record struct Ray(Vector4 Origin, Vector4 Direction)
 {
-    public Vector4 Position(float t)
-    {
-        return Origin;
-    }
+    public Vector4 Position(float t) => Origin + Direction * t;
 }
