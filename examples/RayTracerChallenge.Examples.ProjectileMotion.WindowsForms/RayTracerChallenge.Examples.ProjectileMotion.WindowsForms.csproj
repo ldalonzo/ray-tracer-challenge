@@ -13,4 +13,8 @@
     <PackageReference Include="SkiaSharp.Views.WindowsForms" Version="2.88.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RayTracerChallenge.Examples.ProjectileMotion\RayTracerChallenge.Examples.ProjectileMotion.csproj" />
+  </ItemGroup>
+
 </Project>

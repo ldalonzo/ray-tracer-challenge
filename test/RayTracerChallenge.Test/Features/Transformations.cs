@@ -11,7 +11,7 @@ public class Transformations
     public void Multiplying_by_a_translation_matrix()
     {
         var transform = Matrix4x4.CreateTranslation(5, -3, 2);
-        var p = Point.Create(-3, 4, 5);
+        var p = Primitives.Point(-3, 4, 5);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -26,7 +26,7 @@ public class Transformations
     {
         var transform = Matrix4x4.CreateTranslation(5, -3, 2);
         Matrix4x4.Invert(transform, out var inv).Should().BeTrue();
-        var p = Point.Create(-3, 4, 5);
+        var p = Primitives.Point(-3, 4, 5);
 
         var pt = Vector4.Transform(p, inv);
 
@@ -52,7 +52,7 @@ public class Transformations
     public void A_scaling_matrix_applied_to_a_point()
     {
         var transform = Matrix4x4.CreateScale(2, 3, 4);
-        var p = Point.Create(-4, 6, 8);
+        var p = Primitives.Point(-4, 6, 8);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -96,7 +96,7 @@ public class Transformations
     {
         // Shows how a point can be reflected across the x axis by scaling the x component by -1.
         var transform = Matrix4x4.CreateScale(-1, 1, 1);
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -111,7 +111,7 @@ public class Transformations
     {
         var halfQuarter = Matrix4x4.CreateRotationX(MathF.PI / 4);
         var fullQuarter = Matrix4x4.CreateRotationX(MathF.PI / 2);
-        var p = Point.Create(0, 1, 0);
+        var p = Primitives.Point(0, 1, 0);
 
         var p1 = Vector4.Transform(p, halfQuarter);
         var p2 = Vector4.Transform(p, fullQuarter);
@@ -132,7 +132,7 @@ public class Transformations
     {
         var halfQuarter = Matrix4x4.CreateRotationX(MathF.PI / 4);
         Matrix4x4.Invert(halfQuarter, out var inv).Should().BeTrue();
-        var p = Point.Create(0, 1, 0);
+        var p = Primitives.Point(0, 1, 0);
 
         var p1 = Vector4.Transform(p, inv);
 
@@ -147,7 +147,7 @@ public class Transformations
     {
         var halfQuarter = Matrix4x4.CreateRotationY(MathF.PI / 4);
         var fullQuarter = Matrix4x4.CreateRotationY(MathF.PI / 2);
-        var p = Point.Create(0, 0, 1);
+        var p = Primitives.Point(0, 0, 1);
 
         var p1 = Vector4.Transform(p, halfQuarter);
         var p2 = Vector4.Transform(p, fullQuarter);
@@ -169,7 +169,7 @@ public class Transformations
     {
         var halfQuarter = Matrix4x4.CreateRotationZ(MathF.PI / 4);
         var fullQuarter = Matrix4x4.CreateRotationZ(MathF.PI / 2);
-        var p = Point.Create(0, 1, 0);
+        var p = Primitives.Point(0, 1, 0);
 
         var p1 = Vector4.Transform(p, halfQuarter);
         var p2 = Vector4.Transform(p, fullQuarter);
@@ -189,7 +189,7 @@ public class Transformations
     public void A_shearing_transformation_moves_x_in_proportion_to_y()
     {
         var transform = new Transformation4x4Builder().WithShearing(1, 0, 0, 0, 0, 0).Build();
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -203,7 +203,7 @@ public class Transformations
     public void A_shearing_transformation_moves_x_in_proportion_to_z()
     {
         var transform = new Transformation4x4Builder().WithShearing(0, 1, 0, 0, 0, 0).Build();
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -217,7 +217,7 @@ public class Transformations
     public void A_shearing_transformation_moves_y_in_proportion_to_x()
     {
         var transform = new Transformation4x4Builder().WithShearing(0, 0, 1, 0, 0, 0).Build();
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -231,7 +231,7 @@ public class Transformations
     public void A_shearing_transformation_moves_y_in_proportion_to_z()
     {
         var transform = new Transformation4x4Builder().WithShearing(0, 0, 0, 1, 0, 0).Build();
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -245,7 +245,7 @@ public class Transformations
     public void A_shearing_transformation_moves_z_in_proportion_to_x()
     {
         var transform = new Transformation4x4Builder().WithShearing(0, 0, 0, 0, 1, 0).Build();
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -259,7 +259,7 @@ public class Transformations
     public void A_shearing_transformation_moves_z_in_proportion_to_y()
     {
         var transform = new Transformation4x4Builder().WithShearing(0, 0, 0, 0, 0, 1).Build();
-        var p = Point.Create(2, 3, 4);
+        var p = Primitives.Point(2, 3, 4);
 
         var pt = Vector4.Transform(p, transform);
 
@@ -272,7 +272,7 @@ public class Transformations
     [Fact]
     public void Individual_transformations_are_applied_in_sequence()
     {
-        var p = Point.Create(1, 0, 1);
+        var p = Primitives.Point(1, 0, 1);
         var a = Matrix4x4.CreateRotationX(MathF.PI / 2);
         var b = Matrix4x4.CreateScale(5, 5, 5);
         var c = Matrix4x4.CreateTranslation(10, 5, 7);
@@ -299,7 +299,7 @@ public class Transformations
     [Fact]
     public void Chained_transformations_must_be_applied_in_reverse_order()
     {
-        var p = Point.Create(1, 0, 1);
+        var p = Primitives.Point(1, 0, 1);
         var a = Matrix4x4.CreateRotationX(MathF.PI / 2);
         var b = Matrix4x4.CreateScale(5, 5, 5);
         var c = Matrix4x4.CreateTranslation(10, 5, 7);
@@ -315,7 +315,7 @@ public class Transformations
     [Fact]
     public void Chained_transformations()
     {
-        var p = Point.Create(1, 0, 1);
+        var p = Primitives.Point(1, 0, 1);
 
         var t = new Transformation4x4Builder()
             .Append(Matrix4x4.CreateRotationX(MathF.PI / 2))

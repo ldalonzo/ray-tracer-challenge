@@ -22,12 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
-    <PackageReference Include="FluentAssertions" Version="6.10.0" />
+     <PackageReference Include="FluentAssertions" Version="6.10.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RayTracerChallenge.Core\RayTracerChallenge.Core.csproj" />
+    <ProjectReference Include="..\..\examples\RayTracerChallenge.Examples.ProjectileMotion\RayTracerChallenge.Examples.ProjectileMotion.csproj" />
   </ItemGroup>
 
 </Project>

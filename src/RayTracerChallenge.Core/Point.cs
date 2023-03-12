@@ -1,6 +1,6 @@
 ﻿namespace RayTracerChallenge.Core;
 
-public static class Point
+public static class Primitives
 {
-    public static Vector4 Create(float x, float y, float z) => new(x, y, z, 1);
+    public static Vector4 Point(float x, float y, float z) => new(x, y, z, 1);
 }

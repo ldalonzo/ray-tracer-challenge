@@ -40,7 +40,7 @@ public class Tuples
     [AutoData]
     public void PointFactory(float x, float y, float z)
     {
-        var a = Point.Create(x, y, z);
+        var a = Primitives.Point(x, y, z);
 
         a.X.Should().Be(x);
         a.Y.Should().Be(y);
@@ -82,8 +82,8 @@ public class Tuples
     [Fact]
     public void SubtractingTwoPoints()
     {
-        var p1 = Point.Create(3, 2, 1);
-        var p2 = Point.Create(5, 6, 7);
+        var p1 = Primitives.Point(3, 2, 1);
+        var p2 = Primitives.Point(5, 6, 7);
 
         var v = p1 - p2;
 
@@ -98,7 +98,7 @@ public class Tuples
     [Fact]
     public void SubtractingVectorFromPoint()
     {
-        var p = Point.Create(3, 2, 1);
+        var p = Primitives.Point(3, 2, 1);
         var v = Vector.Create(5, 6, 7);
 
         var q = p - v;
