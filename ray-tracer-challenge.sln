@@ -12,11 +12,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Test", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Core", "src\RayTracerChallenge.Core\RayTracerChallenge.Core.csproj", "{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.ProjectileMotion", "src\RayTracerChallenge.Examples.ProjectileMotion\RayTracerChallenge.Examples.ProjectileMotion.csproj", "{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C5431AA6-B01E-465B-B474-246FF275DADE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.ProjectileMotion.WindowsForms", "src\RayTracerChallenge.Examples.ProjectileMotion.WindowsForms\RayTracerChallenge.Examples.ProjectileMotion.WindowsForms.csproj", "{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.Test", "test\RayTracerChallenge.Examples.Test\RayTracerChallenge.Examples.Test.csproj", "{3CF45B00-C64A-40ED-95A7-46DCD46F869E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{6C72825A-ED95-4544-938C-AE3D48686AC0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.Clock", "examples\RayTracerChallenge.Examples.Clock\RayTracerChallenge.Examples.Clock.csproj", "{EDCF60A1-D635-4C08-8981-EC8D761CEDFE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.ProjectileMotion", "examples\RayTracerChallenge.Examples.ProjectileMotion\RayTracerChallenge.Examples.ProjectileMotion.csproj", "{CB31AAE8-31CF-47D9-AD83-854CD8ECCCDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.ProjectileMotion.WindowsForms", "examples\RayTracerChallenge.Examples.ProjectileMotion.WindowsForms\RayTracerChallenge.Examples.ProjectileMotion.WindowsForms.csproj", "{59BB2033-50B5-43CF-8273-1BCEDEF8B3B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracerChallenge.Examples.Clock.WPF", "examples\RayTracerChallenge.Examples.Clock.WPF\RayTracerChallenge.Examples.Clock.WPF.csproj", "{58D74C66-0F61-4867-B1EC-C7E463CE2A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,20 +40,37 @@ Global
 		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C99CFCD0-D463-4C5C-A280-D26389FB5DDE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1DD2761-3F49-4B4E-9EC3-4037F3AEEF12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0A5D7C56-64C9-48EE-8AC3-D3937FACD1B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CF45B00-C64A-40ED-95A7-46DCD46F869E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CF45B00-C64A-40ED-95A7-46DCD46F869E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF45B00-C64A-40ED-95A7-46DCD46F869E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CF45B00-C64A-40ED-95A7-46DCD46F869E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDCF60A1-D635-4C08-8981-EC8D761CEDFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCF60A1-D635-4C08-8981-EC8D761CEDFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCF60A1-D635-4C08-8981-EC8D761CEDFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCF60A1-D635-4C08-8981-EC8D761CEDFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB31AAE8-31CF-47D9-AD83-854CD8ECCCDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB31AAE8-31CF-47D9-AD83-854CD8ECCCDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB31AAE8-31CF-47D9-AD83-854CD8ECCCDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB31AAE8-31CF-47D9-AD83-854CD8ECCCDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59BB2033-50B5-43CF-8273-1BCEDEF8B3B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59BB2033-50B5-43CF-8273-1BCEDEF8B3B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59BB2033-50B5-43CF-8273-1BCEDEF8B3B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59BB2033-50B5-43CF-8273-1BCEDEF8B3B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D74C66-0F61-4867-B1EC-C7E463CE2A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D74C66-0F61-4867-B1EC-C7E463CE2A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D74C66-0F61-4867-B1EC-C7E463CE2A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D74C66-0F61-4867-B1EC-C7E463CE2A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C41E65F8-2D28-4F48-8F48-5A41E92573C2} = {C5431AA6-B01E-465B-B474-246FF275DADE}
+		{3CF45B00-C64A-40ED-95A7-46DCD46F869E} = {C5431AA6-B01E-465B-B474-246FF275DADE}
+		{EDCF60A1-D635-4C08-8981-EC8D761CEDFE} = {6C72825A-ED95-4544-938C-AE3D48686AC0}
+		{CB31AAE8-31CF-47D9-AD83-854CD8ECCCDB} = {6C72825A-ED95-4544-938C-AE3D48686AC0}
+		{59BB2033-50B5-43CF-8273-1BCEDEF8B3B9} = {6C72825A-ED95-4544-938C-AE3D48686AC0}
+		{58D74C66-0F61-4867-B1EC-C7E463CE2A73} = {6C72825A-ED95-4544-938C-AE3D48686AC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19B99BF4-5260-4BDD-86DC-FF8A6410561B}

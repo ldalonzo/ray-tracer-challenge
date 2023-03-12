@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RayTracerChallenge.Core\RayTracerChallenge.Core.csproj" />
+    <PackageReference Include="Microsoft.Maui.Graphics.Skia" Version="8.0.0-preview.1.7762" />
   </ItemGroup>
 
 </Project>

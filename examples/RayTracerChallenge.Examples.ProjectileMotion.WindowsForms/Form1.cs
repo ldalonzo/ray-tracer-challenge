@@ -17,8 +17,6 @@ public partial class Form1 : Form
         e.Surface.Canvas.Clear(SKColor.Parse("#003366"));
 
         var canvas = new SkiaCanvas() { Canvas = e.Surface.Canvas };
-        var info = e.Info;
-
         Draw(canvas, e.Info);
     }
 
@@ -27,8 +25,6 @@ public partial class Form1 : Form
         e.Surface.Canvas.Clear(SKColor.Parse("#000000"));
 
         var canvas = new SkiaCanvas() { Canvas = e.Surface.Canvas };
-        var info = e.Info;
-
         Draw(canvas, e.Info);
     }
 
