@@ -151,7 +151,6 @@ public class Transformations
         var p1 = Vector4.Transform(p, halfQuarter);
         var p2 = Vector4.Transform(p, fullQuarter);
 
-        
         p1.X.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
         p1.Y.Should().BeApproximately(0, Tolerance);
         p1.Z.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);

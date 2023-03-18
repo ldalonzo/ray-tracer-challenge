@@ -1,4 +1,6 @@
-﻿namespace RayTracerChallenge.Test.Features;
+﻿using System.Numerics;
+
+namespace RayTracerChallenge.Test.Features;
 
 public class Rays
 {
@@ -28,5 +30,31 @@ public class Rays
         p.Y.Should().Be(expY);
         p.Z.Should().Be(expZ);
         p.IsPoint().Should().BeTrue();
+    }
+
+    [Fact]
+    public void Translating_a_ray()
+    {
+        var ray = new Ray(Primitives.Point(1, 2, 3), Primitives.Vector(0, 1, 0));
+        var m = Matrix4x4.CreateTranslation(3, 4, 5);
+
+        var r2 = ray.Transform(m);
+
+        r2.Should().NotBeSameAs(ray);
+        r2.Origin.Should().Be(Primitives.Point(4, 6, 8));
+        r2.Direction.Should().Be(Primitives.Vector(0, 1, 0));
+    }
+
+    [Fact]
+    public void Scaling_a_ray()
+    {
+        var ray = new Ray(Primitives.Point(1, 2, 3), Primitives.Vector(0, 1, 0));
+        var m = Matrix4x4.CreateScale(2, 3, 4);
+
+        var r2 = ray.Transform(m);
+
+        r2.Should().NotBeSameAs(ray);
+        r2.Origin.Should().Be(Primitives.Point(2, 6, 12));
+        r2.Direction.Should().Be(Primitives.Vector(0, 3, 0));
     }
 }
