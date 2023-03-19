@@ -4,6 +4,8 @@ namespace RayTracerChallenge.Test.Features;
 
 public class Spheres
 {
+    private const float Tolerance = 1E-5F;
+
     [Fact]
     public void A_ray_intersects_a_sphere_at_two_points()
     {
@@ -108,5 +110,79 @@ public class Spheres
         var xs = s.Intersect(ray);
 
         xs.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_point_on_the_x_axis()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(1, 0, 0));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().Be(1);
+        normal.Y.Should().Be(0);
+        normal.Z.Should().Be(0);
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_point_on_the_y_axis()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(0, 1, 0));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().Be(0);
+        normal.Y.Should().Be(1);
+        normal.Z.Should().Be(0);
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_point_on_the_z_axis()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(0, 0, 1));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().Be(0);
+        normal.Y.Should().Be(0);
+        normal.Z.Should().Be(1);
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_nonaxial_point()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().BeApproximately(MathF.Sqrt(3) / 3F, Tolerance);
+        normal.Y.Should().BeApproximately(MathF.Sqrt(3) / 3F, Tolerance);
+        normal.Z.Should().BeApproximately(MathF.Sqrt(3) / 3F, Tolerance);
+    }
+
+    [Fact]
+    public void The_normal_is_a_normalized_vector()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F));
+
+        normal.Length().Should().BeApproximately(1f, Tolerance);
+    }
+
+    [Fact]
+    public void Computing_the_normal_on_a_translated_sphere()
+    {
+        var s = new Sphere { Transform = Matrix4x4.CreateTranslation(0, 1, 0) };
+
+        var normal = s.NormalAt(Primitives.Point(0F, 1.70711F, -0.70711F));
+
+        normal.X.Should().BeApproximately(0, Tolerance);
+        normal.Y.Should().BeApproximately(0.70711F, Tolerance);
+        normal.Z.Should().BeApproximately(-0.70711f, Tolerance);
     }
 }

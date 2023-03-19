@@ -7,6 +7,9 @@ public record struct Sphere() : ISceneObject
     private readonly Matrix4x4 _transform = Matrix4x4.Identity;
     private readonly Matrix4x4 _transformInverse = Matrix4x4.Identity;
 
+    /// <summary>
+    /// Transforms points from object space to world space.
+    /// </summary>
     public Matrix4x4 Transform
     {
         get => _transform;
@@ -35,5 +38,13 @@ public record struct Sphere() : ISceneObject
             yield return new Intersection(this, (-b - ds) / (2 * a));
             yield return new Intersection(this, (-b + ds) / (2 * a));
         }
+    }
+
+    public Vector4 NormalAt(Vector4 worldPoint)
+    {
+        var objectPoint = Vector4.Transform(worldPoint, _transformInverse);
+        var objectNormal = objectPoint - Center;
+
+        return objectNormal;
     }
 }
