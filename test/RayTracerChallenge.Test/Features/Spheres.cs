@@ -205,6 +205,7 @@ public class Spheres
 
         var normal = s.NormalAt(Primitives.Point(0, MathF.Sqrt(2) / 2f, -MathF.Sqrt(2) / 2f));
 
+        // I think the test on page 80 is wrong. Here's how it should be:
         normal.X.Should().BeApproximately(-0.41498F, Tolerance);
         normal.Y.Should().BeApproximately(0.86207F, Tolerance);
         normal.Z.Should().BeApproximately(-0.29089F, Tolerance);
