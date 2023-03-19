@@ -4,13 +4,22 @@ public record struct Sphere() : ISceneObject
 {
     public Vector4 Center { get; } = Primitives.Point(0, 0, 0);
 
-    public Matrix4x4 Transform { get; init; } = Matrix4x4.Identity;
+    private readonly Matrix4x4 _transform = Matrix4x4.Identity;
+    private readonly Matrix4x4 _transformInverse = Matrix4x4.Identity;
+
+    public Matrix4x4 Transform
+    {
+        get => _transform;
+        init
+        {
+            _transform = value;
+            Matrix4x4.Invert(Transform, out _transformInverse);
+        }
+    }
 
     public IEnumerable<Intersection> Intersect(Ray ray)
     {
-        var ray2 = Matrix4x4.Invert(Transform, out var _transformI)
-            ? ray.Transform(_transformI)
-            : ray;
+        var ray2 = ray.Transform(_transformInverse);
 
         var sphereToRay = ray2.Origin - Center;
 

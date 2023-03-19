@@ -19,14 +19,20 @@ public class AnalogClockRenderer
             .Append(Matrix4x4.CreateTranslation(info.Width / 2, info.Height / 2, 0))
             .Build();
 
-        canvas.StrokeColor = Colors.Red;
-        foreach (var p in EnumeratePoints().Select(p => Vector4.Transform(p, transformation)))
+        canvas.StrokeColor = Colors.Green;
+        foreach (var p in EnumerateMinutes().Select(p => Vector4.Transform(p, transformation)))
         {
             canvas.DrawCircle(p.X, p.Y, 2);
         }
+
+        canvas.StrokeColor = Colors.Red;
+        foreach (var p in EnumerateHours().Select(p => Vector4.Transform(p, transformation)))
+        {
+            canvas.DrawCircle(p.X, p.Y, 4);
+        }
     }
 
-    private IEnumerable<Vector4> EnumeratePoints()
+    private static IEnumerable<Vector4> EnumerateHours()
     {
         yield return Primitives.Point(0, 0, 0);
 
@@ -38,6 +44,22 @@ public class AnalogClockRenderer
             .Build();
 
         for (int i = 0; i < 11; i++)
+        {
+            p = Vector4.Transform(p, transformation);
+            yield return p;
+        }
+    }
+
+    private static IEnumerable<Vector4> EnumerateMinutes()
+    {
+        var p = Primitives.Point(1, 0, 0);
+        yield return p;
+
+        var transformation = new Transformation4x4Builder()
+            .Append(Matrix4x4.CreateRotationZ(MathF.PI / 30))
+            .Build();
+
+        for (int i = 0; i <= 601; i++)
         {
             p = Vector4.Transform(p, transformation);
             yield return p;
