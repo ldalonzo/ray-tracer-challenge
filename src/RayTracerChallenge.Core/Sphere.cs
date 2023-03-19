@@ -45,6 +45,9 @@ public record struct Sphere() : ISceneObject
         var objectPoint = Vector4.Transform(worldPoint, _transformInverse);
         var objectNormal = objectPoint - Center;
 
-        return objectNormal;
+        var worldNormal = Vector4.Transform(objectNormal, Matrix4x4.Transpose(_transformInverse));
+        worldNormal.W = 0;
+
+        return Vector4.Normalize(worldNormal);
     }
 }
