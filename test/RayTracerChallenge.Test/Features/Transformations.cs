@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Vector = RayTracerChallenge.Core.Vector;
 
 namespace RayTracerChallenge.Test.Features;
 
@@ -40,7 +39,7 @@ public class Transformations
     public void Translation_does_not_affect_vectors()
     {
         var transform = Matrix4x4.CreateTranslation(5, -3, 2);
-        var v = Vector.Create(-3, 4, 5);
+        var v = Primitives.Vector(-3, 4, 5);
 
         var vt = Vector4.Transform(v, transform);
 
@@ -66,7 +65,7 @@ public class Transformations
     public void A_scaling_matrix_applied_to_a_vector()
     {
         var transform = Matrix4x4.CreateScale(2, 3, 4);
-        var v = Vector.Create(-4, 6, 8);
+        var v = Primitives.Vector(-4, 6, 8);
 
         var vt = Vector4.Transform(v, transform);
 
@@ -81,7 +80,7 @@ public class Transformations
     {
         var transform = Matrix4x4.CreateScale(2, 3, 4);
         Matrix4x4.Invert(transform, out var inv).Should().BeTrue();
-        var v = Vector.Create(-4, 6, 8);
+        var v = Primitives.Vector(-4, 6, 8);
 
         var vt = Vector4.Transform(v, inv);
 
@@ -152,7 +151,6 @@ public class Transformations
         var p1 = Vector4.Transform(p, halfQuarter);
         var p2 = Vector4.Transform(p, fullQuarter);
 
-        
         p1.X.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
         p1.Y.Should().BeApproximately(0, Tolerance);
         p1.Z.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);

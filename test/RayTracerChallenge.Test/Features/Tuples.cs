@@ -1,5 +1,4 @@
 ﻿using System.Numerics;
-using Vector = RayTracerChallenge.Core.Vector;
 
 namespace RayTracerChallenge.Test.Features;
 
@@ -56,7 +55,7 @@ public class Tuples
     [AutoData]
     public void VectorFactory(float x, float y, float z)
     {
-        var a = Vector.Create(x, y, z);
+        var a = Primitives.Vector(x, y, z);
 
         a.X.Should().Be(x);
         a.Y.Should().Be(y);
@@ -80,7 +79,7 @@ public class Tuples
     }
 
     [Fact]
-    public void SubtractingTwoPoints()
+    public void Subtracting_two_points()
     {
         var p1 = Primitives.Point(3, 2, 1);
         var p2 = Primitives.Point(5, 6, 7);
@@ -99,7 +98,7 @@ public class Tuples
     public void SubtractingVectorFromPoint()
     {
         var p = Primitives.Point(3, 2, 1);
-        var v = Vector.Create(5, 6, 7);
+        var v = Primitives.Vector(5, 6, 7);
 
         var q = p - v;
 
@@ -114,8 +113,8 @@ public class Tuples
     [Fact]
     public void SubtractingTwoVectors()
     {
-        var v1 = Vector.Create(3, 2, 1);
-        var v2 = Vector.Create(5, 6, 7);
+        var v1 = Primitives.Vector(3, 2, 1);
+        var v2 = Primitives.Vector(5, 6, 7);
 
         var v3 = v1 - v2;
 
@@ -131,7 +130,7 @@ public class Tuples
     public void SubtractingVectorFromZeroVector()
     {
         var zero = Vector4.Zero;
-        var v = Vector.Create(1, -2, 3);
+        var v = Primitives.Vector(1, -2, 3);
 
         var nv = zero - v;
         nv.X.Should().Be(-1);
@@ -169,7 +168,7 @@ public class Tuples
     }
 
     [Fact]
-    public void DividingTupleByScalar()
+    public void Dividing_a_tuple_by_a_scalar()
     {
         var a = new Vector4(1, -2, 3, -4);
         var scalar = 2;
@@ -189,17 +188,17 @@ public class Tuples
     [InlineData(2, 10, 11, 15)]
     [InlineData(-2, -10, -11, 15)]
     [InlineData(1, 2, 3, 3.741)]
-    public void ComputingMagnitudeOfVector(float x, float y, float z, float expectedMagnitude)
+    public void Computing_the_magnitude_of_vector(float x, float y, float z, float expectedMagnitude)
     {
-        var v = Vector.Create(x, y, z);
+        var v = Primitives.Vector(x, y, z);
 
         v.Length().Should().BeApproximately(expectedMagnitude, 1E-3F);
     }
 
     public static readonly TheoryData<Vector4, Vector4> NormalizingVectorTheoryData = new()
     {
-        { Vector.Create(4, 0, 0), Vector.Create(1, 0, 0) },
-        { Vector.Create(1, 2, 3), Vector.Create(0.26726f, 0.53452f, 0.80178f) },
+        { Primitives.Vector(4, 0, 0), Primitives.Vector(1, 0, 0) },
+        { Primitives.Vector(1, 2, 3), Primitives.Vector(0.26726f, 0.53452f, 0.80178f) },
     };
 
     [Theory]
@@ -214,10 +213,10 @@ public class Tuples
     }
 
     [Fact]
-    public void DotProductOfTwoTuples()
+    public void The_dot_product_of_two_tuples()
     {
-        var a = Vector.Create(1, 2, 3);
-        var b = Vector.Create(2, 3, 4);
+        var a = Primitives.Vector(1, 2, 3);
+        var b = Primitives.Vector(2, 3, 4);
 
         Vector4.Dot(a, b).Should().Be(20);
     }
@@ -225,8 +224,8 @@ public class Tuples
     [Fact]
     public void CrossProductOfTwoVectors()
     {
-        var a = Vector.Create(1, 2, 3);
-        var b = Vector.Create(2, 3, 4);
+        var a = Primitives.Vector(1, 2, 3);
+        var b = Primitives.Vector(2, 3, 4);
 
         Vector3 a3 = new(a.X, a.Y, a.Z);
         Vector3 b3 = new(b.X, b.Y, b.Z);
