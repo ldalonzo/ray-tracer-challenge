@@ -1,8 +1,10 @@
 ﻿namespace RayTracerChallenge.Core;
 
-public record struct Sphere() : ISceneObject
+public record Sphere : ISceneObject
 {
     public Vector4 Center { get; } = Primitives.Point(0, 0, 0);
+
+    public Material Material { get; init; } = Material.Default;
 
     private readonly Matrix4x4 _transform = Matrix4x4.Identity;
     private readonly Matrix4x4 _transformInverse = Matrix4x4.Identity;
@@ -20,14 +22,14 @@ public record struct Sphere() : ISceneObject
         }
     }
 
-    public IEnumerable<Intersection> Intersect(Ray ray)
+    public IEnumerable<Intersection> Intersect(Ray worldRay)
     {
-        var ray2 = ray.Transform(_transformInverse);
+        var objectRay = worldRay.Transform(_transformInverse);
 
-        var sphereToRay = ray2.Origin - Center;
+        var sphereToRay = objectRay.Origin - Center;
 
-        var a = Vector4.Dot(ray2.Direction, ray2.Direction);
-        var b = 2 * Vector4.Dot(ray2.Direction, sphereToRay);
+        var a = Vector4.Dot(objectRay.Direction, objectRay.Direction);
+        var b = 2 * Vector4.Dot(objectRay.Direction, sphereToRay);
         var c = Vector4.Dot(sphereToRay, sphereToRay) - 1;
 
         var discriminant = MathF.Pow(b, 2) - 4 * a * c;

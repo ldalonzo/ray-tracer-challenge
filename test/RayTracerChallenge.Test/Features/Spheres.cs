@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using RayTracerChallenge.Core;
 
 namespace RayTracerChallenge.Test.Features;
 
@@ -209,5 +210,23 @@ public class Spheres
         normal.X.Should().BeApproximately(-0.41498F, Tolerance);
         normal.Y.Should().BeApproximately(0.86207F, Tolerance);
         normal.Z.Should().BeApproximately(-0.29089F, Tolerance);
+    }
+
+    [Fact]
+    public void A_sphere_has_a_default_material()
+    {
+        var s = new Sphere();
+
+        s.Material.Should().Be(Material.Default);
+    }
+
+    [Fact]
+    public void A_sphere_may_be_assigned_a_material()
+    {
+        var m = Material.Default with { Ambient = 1 };
+
+        var s = new Sphere() with { Material = m };
+
+        s.Material.Should().Be(m);
     }
 }
