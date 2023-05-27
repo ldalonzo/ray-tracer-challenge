@@ -24,26 +24,60 @@ public record Material(Vector3 Color, float Ambient, float Diffuse, float Specul
     public float Shininess { get; init; } = Shininess;
 
     /// <summary>
-    /// 
+    /// Add together the material's ambient, diffuse, and specular components, weighted by the angles between the different vectors.
     /// </summary>
     /// <param name="light">The light source</param>
     /// <param name="point">The point being illuminated.</param>
-    /// <param name="eyev">The eye vector from the Phong reflection model.</param>
-    /// <param name="normalv">The normal vectors from the Phong reflection model.</param>
-    /// <returns></returns>
-    public Vector3 Lighting(PointLight light, Vector4 point, Vector4 eyev, Vector4 normalv)
+    /// <param name="eyeV">The eye vector from the Phong reflection model.</param>
+    /// <param name="normalV">The normal vectors from the Phong reflection model.</param>
+    public Vector3 Lighting(PointLight light, Vector4 point, Vector4 eyeV, Vector4 normalV)
+    {
+        var (ambient, diffuse, specular) = Lighting3(light, point, eyeV, normalV);
+        return ambient + diffuse + specular;
+    }
+
+    public (Vector3, Vector3, Vector3) Lighting3(PointLight light, Vector4 point, Vector4 eyeV, Vector4 normalV)
     {
         var effectiveColor = Color * light.Intensity;
+
+        // Find the direction to the light source.
+        var lightV = Vector4.Normalize(light.Position - point);
 
         // Compute the ambient contribution
         var ambient = effectiveColor * Ambient;
 
-        // Compute the diffuse contribution.
-        var diffuse = effectiveColor * Diffuse;
+        Vector3 diffuse;
+        Vector3 specular;
 
-        // Compute the specular contribution.
-        var specular = light.Intensity * Specular;
+        // Compute the cosine of the angle between the light vector and the normal vector.
+        var lightDotNormal = Vector4.Dot(lightV, normalV);
+        if (lightDotNormal < 0)
+        {
+            // A negative number means the light is on the other side of the surface.
+            diffuse = Vector3.Zero;
+            specular = Vector3.Zero;
+        }
+        else
+        {
+            // Compute the diffuse contribution.
+            diffuse = effectiveColor * Diffuse * lightDotNormal;
 
-        return ambient + diffuse + specular;
+            // Compute the cosine of the angle between the reflection vector and the eye vector.
+            var reflectv = -lightV.Reflect(normalV);
+            var reflectDotEye = Vector4.Dot(reflectv, eyeV);
+            if (reflectDotEye <= 0)
+            {
+                // A negative number means the light reflects away from the eye.
+                specular = Vector3.Zero;
+            }
+            else
+            {
+                // Compute the specular contribution.
+                var factor = MathF.Pow(reflectDotEye, Shininess);
+                specular = light.Intensity * Specular * factor;
+            }
+        }
+
+        return (ambient, diffuse, specular);
     }
 }
