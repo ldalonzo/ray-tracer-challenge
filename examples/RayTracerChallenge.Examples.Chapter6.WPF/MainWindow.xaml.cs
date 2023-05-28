@@ -6,7 +6,7 @@ using Microsoft.Maui.Graphics.Skia;
 using RayTracerChallenge.Core;
 using SkiaSharp.Views.Desktop;
 
-namespace RayTracerChallenge.Examples.Chapter5.WPF
+namespace RayTracerChallenge.Examples.Chapter6.WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -26,7 +26,7 @@ namespace RayTracerChallenge.Examples.Chapter5.WPF
         private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
             var canvas = new SkiaCanvas() { Canvas = e.Surface.Canvas };
-
+            
             var info = e.Info;
             canvas.FillColor = Colors.Black;
             canvas.FillRectangle(0, 0, info.Width, info.Height);
@@ -44,12 +44,12 @@ namespace RayTracerChallenge.Examples.Chapter5.WPF
                 _renderer.Dispose();
             }
 
-            _renderer = new SphereSilhouetteRenderer(imageWidth, imageHeight);
+            _renderer = new SpherePhongRenderer(imageWidth, imageHeight);
 
             buttonRender.IsEnabled = false;
 
             var cts = new CancellationTokenSource();
-            var refreshTask = DrawRefresh(25, cts.Token);
+            var refreshTask = DrawRefresh(25, cts.Token);            
             await _renderer.RenderAsync(CancellationToken.None);
             cts.Cancel();
             await refreshTask;
