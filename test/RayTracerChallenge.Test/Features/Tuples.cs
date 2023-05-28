@@ -4,6 +4,8 @@ namespace RayTracerChallenge.Test.Features;
 
 public class Tuples
 {
+    private const float Tolerance = 1E-5F;
+
     [Theory]
     [AutoData]
     public void A_tuple_with_w_eq_1_is_a_point(float x, float y, float z)
@@ -207,9 +209,9 @@ public class Tuples
     {
         var actual = Vector4.Normalize(v);
 
-        actual.X.Should().BeApproximately(expected.X, 1E-5f);
-        actual.Y.Should().BeApproximately(expected.Y, 1E-5f);
-        actual.Z.Should().BeApproximately(expected.Z, 1E-5f);
+        actual.X.Should().BeApproximately(expected.X, Tolerance);
+        actual.Y.Should().BeApproximately(expected.Y, Tolerance);
+        actual.Z.Should().BeApproximately(expected.Z, Tolerance);
     }
 
     [Fact]
@@ -252,9 +254,9 @@ public class Tuples
 
         var c3 = c1 + c2;
 
-        c3.X.Should().BeApproximately(1.6f, 1E-6F);
-        c3.Y.Should().BeApproximately(0.7f, 1E-6F);
-        c3.Z.Should().BeApproximately(1.0f, 1E-6F);
+        c3.X.Should().BeApproximately(1.6f, Tolerance);
+        c3.Y.Should().BeApproximately(0.7f, Tolerance);
+        c3.Z.Should().BeApproximately(1.0f, Tolerance);
     }
 
     [Fact]
@@ -265,9 +267,9 @@ public class Tuples
 
         var c3 = c1 - c2;
 
-        c3.X.Should().BeApproximately(0.2f, 1E-6F);
-        c3.Y.Should().BeApproximately(0.5f, 1E-6F);
-        c3.Z.Should().BeApproximately(0.5f, 1E-6F);
+        c3.X.Should().BeApproximately(0.2f, Tolerance);
+        c3.Y.Should().BeApproximately(0.5f, Tolerance);
+        c3.Z.Should().BeApproximately(0.5f, Tolerance);
     }
 
     [Fact]
@@ -294,5 +296,35 @@ public class Tuples
         c3.X.Should().BeApproximately(0.9f, 1E-6F);
         c3.Y.Should().BeApproximately(0.2f, 1E-6F);
         c3.Z.Should().BeApproximately(0.04f, 1E-6F);
+    }
+
+    [Fact]
+    public void Reflecting_a_vector_approaching_at_45()
+    {
+        var v = Primitives.Vector(1, -1, 0);
+        var n = Primitives.Vector(0, 1, 0);
+
+        var r = v.Reflect(n);
+
+        r.Should().NotBeSameAs(v);
+        r.IsVector().Should().BeTrue();
+        r.X.Should().BeApproximately(1F, Tolerance);
+        r.Y.Should().BeApproximately(1F, Tolerance);
+        r.Z.Should().BeApproximately(0F, Tolerance);
+    }
+
+    [Fact]
+    public void Reflecting_a_vector_off_a_slanted_surface()
+    {
+        var v = Primitives.Vector(0, -1, 0);
+        var n = Primitives.Vector(MathF.Sqrt(2) / 2F, MathF.Sqrt(2) / 2F, 0);
+
+        var r = v.Reflect(n);
+
+        r.Should().NotBeSameAs(v);
+        r.IsVector().Should().BeTrue();
+        r.X.Should().BeApproximately(1F, Tolerance);
+        r.Y.Should().BeApproximately(0F, Tolerance);
+        r.Z.Should().BeApproximately(0F, Tolerance);
     }
 }

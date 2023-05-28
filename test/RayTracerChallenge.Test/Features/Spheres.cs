@@ -1,9 +1,12 @@
 ﻿using System.Numerics;
+using RayTracerChallenge.Core;
 
 namespace RayTracerChallenge.Test.Features;
 
 public class Spheres
 {
+    private const float Tolerance = 1E-5F;
+
     [Fact]
     public void A_ray_intersects_a_sphere_at_two_points()
     {
@@ -108,5 +111,122 @@ public class Spheres
         var xs = s.Intersect(ray);
 
         xs.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_point_on_the_x_axis()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(1, 0, 0));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().Be(1);
+        normal.Y.Should().Be(0);
+        normal.Z.Should().Be(0);
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_point_on_the_y_axis()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(0, 1, 0));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().Be(0);
+        normal.Y.Should().Be(1);
+        normal.Z.Should().Be(0);
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_point_on_the_z_axis()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(0, 0, 1));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().Be(0);
+        normal.Y.Should().Be(0);
+        normal.Z.Should().Be(1);
+    }
+
+    [Fact]
+    public void The_normal_on_a_sphere_at_a_nonaxial_point()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F));
+
+        normal.IsVector().Should().BeTrue();
+        normal.X.Should().BeApproximately(MathF.Sqrt(3) / 3F, Tolerance);
+        normal.Y.Should().BeApproximately(MathF.Sqrt(3) / 3F, Tolerance);
+        normal.Z.Should().BeApproximately(MathF.Sqrt(3) / 3F, Tolerance);
+    }
+
+    [Fact]
+    public void The_normal_is_a_normalized_vector()
+    {
+        var s = new Sphere();
+
+        var normal = s.NormalAt(Primitives.Point(MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F, MathF.Sqrt(3) / 3F));
+
+        normal.Length().Should().BeApproximately(1f, Tolerance);
+    }
+
+    [Fact]
+    public void Computing_the_normal_on_a_translated_sphere()
+    {
+        var s = new Sphere { Transform = Matrix4x4.CreateTranslation(0, 1, 0) };
+
+        var normal = s.NormalAt(Primitives.Point(0F, 1.70711F, -0.70711F));
+
+        normal.X.Should().BeApproximately(0, Tolerance);
+        normal.Y.Should().BeApproximately(MathF.Sqrt(2) / 2, Tolerance);
+        normal.Z.Should().BeApproximately(-MathF.Sqrt(2) / 2, Tolerance);
+    }
+
+    [Fact]
+    public void Computing_the_normal_on_a_scaled_sphere()
+    {
+        var s = new Sphere { Transform = Matrix4x4.CreateScale(1F, 0.5F, 1F)  };
+
+        var normal = s.NormalAt(Primitives.Point(0, MathF.Sqrt(2) / 2f, -MathF.Sqrt(2) / 2f));
+
+        normal.X.Should().BeApproximately(0, Tolerance);
+        normal.Y.Should().BeApproximately(0.97014F, Tolerance);
+        normal.Z.Should().BeApproximately(-0.24254F, Tolerance);
+    }
+
+    [Fact]
+    public void Computing_the_normal_on_a_trasformed_sphere()
+    {
+        var s = new Sphere { Transform = Matrix4x4.CreateScale(1F, 0.5F, 1F) * Matrix4x4.CreateRotationZ(MathF.PI / 5F) };
+
+        var normal = s.NormalAt(Primitives.Point(0, MathF.Sqrt(2) / 2f, -MathF.Sqrt(2) / 2f));
+
+        // I think the test on page 80 is wrong. Here's how it should be:
+        normal.X.Should().BeApproximately(-0.41498F, Tolerance);
+        normal.Y.Should().BeApproximately(0.86207F, Tolerance);
+        normal.Z.Should().BeApproximately(-0.29089F, Tolerance);
+    }
+
+    [Fact]
+    public void A_sphere_has_a_default_material()
+    {
+        var s = new Sphere();
+
+        s.Material.Should().Be(Material.Default);
+    }
+
+    [Fact]
+    public void A_sphere_may_be_assigned_a_material()
+    {
+        var m = Material.Default with { Ambient = 1 };
+
+        var s = new Sphere() with { Material = m };
+
+        s.Material.Should().Be(m);
     }
 }

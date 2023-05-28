@@ -1,12 +1,17 @@
 ﻿namespace RayTracerChallenge.Core;
 
-public record struct Sphere() : ISceneObject
+public record Sphere : ISceneObject
 {
     public Vector4 Center { get; } = Primitives.Point(0, 0, 0);
+
+    public Material Material { get; init; } = Material.Default;
 
     private readonly Matrix4x4 _transform = Matrix4x4.Identity;
     private readonly Matrix4x4 _transformInverse = Matrix4x4.Identity;
 
+    /// <summary>
+    /// Transforms points from object space to world space.
+    /// </summary>
     public Matrix4x4 Transform
     {
         get => _transform;
@@ -17,14 +22,14 @@ public record struct Sphere() : ISceneObject
         }
     }
 
-    public IEnumerable<Intersection> Intersect(Ray ray)
+    public IEnumerable<Intersection> Intersect(Ray worldRay)
     {
-        var ray2 = ray.Transform(_transformInverse);
+        var objectRay = worldRay.Transform(_transformInverse);
 
-        var sphereToRay = ray2.Origin - Center;
+        var sphereToRay = objectRay.Origin - Center;
 
-        var a = Vector4.Dot(ray2.Direction, ray2.Direction);
-        var b = 2 * Vector4.Dot(ray2.Direction, sphereToRay);
+        var a = Vector4.Dot(objectRay.Direction, objectRay.Direction);
+        var b = 2 * Vector4.Dot(objectRay.Direction, sphereToRay);
         var c = Vector4.Dot(sphereToRay, sphereToRay) - 1;
 
         var discriminant = MathF.Pow(b, 2) - 4 * a * c;
@@ -35,5 +40,16 @@ public record struct Sphere() : ISceneObject
             yield return new Intersection(this, (-b - ds) / (2 * a));
             yield return new Intersection(this, (-b + ds) / (2 * a));
         }
+    }
+
+    public Vector4 NormalAt(Vector4 worldPoint)
+    {
+        var objectPoint = Vector4.Transform(worldPoint, _transformInverse);
+        var objectNormal = objectPoint - Center;
+
+        var worldNormal = Vector4.Transform(objectNormal, Matrix4x4.Transpose(_transformInverse));
+        worldNormal.W = 0;
+
+        return Vector4.Normalize(worldNormal);
     }
 }
